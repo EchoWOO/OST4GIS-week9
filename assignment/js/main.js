@@ -100,7 +100,7 @@ var resetApplication = function() {
   map.removeLayer(state.line);
 
   state.count = 0;
-  state.markers = []
+  state.markers = [];
   state.line = undefined;
   $('#button-reset').hide();
 }

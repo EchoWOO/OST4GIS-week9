@@ -33,7 +33,9 @@ Let's add the shape we've created to the sidebar. In the HTML, there is a
 container with ID #shapes. Use jQuery's append function to add a new div inside
 the #shapes container. The idea should look like the following:
 
-<div class="shape" data-leaflet-id="[the id]"><h1>Current ID: [the id]</h1></div>
+<div class="shape" data-leaflet-id="[the id]">
+<h1>Current ID: [the id]</h1>
+</div>
 
 Where [the id] is replaced by the Leaflet ID of the layer.
 
@@ -70,7 +72,8 @@ Moving your mouse outside of the circle should remove the highlighting.
 ===================== */
 
 // Global Variables
-var myRectangle;
+var myRectangles = [];
+var myIDs = [];
 
 // Initialize Leaflet Draw
 var drawControl = new L.Control.Draw({
@@ -85,9 +88,42 @@ var drawControl = new L.Control.Draw({
 
 map.addControl(drawControl);
 
+// Task 5 (Stretch Goal): Store multiple shapes
 // Event which is run every time Leaflet draw creates a new layer
 map.on('draw:created', function (e) {
+    console.log(e);
     var type = e.layerType; // The type of shape
     var layer = e.layer; // The Leaflet layer for the shape
     var id = L.stamp(layer); // The unique Leaflet ID for the layer
+    myRectangles.push(layer);
+    myIDs.push(id);
+    map.addLayer(layer);
+    $("#shapes").empty();
+    //Use jQuery's append function to add a new div inside the #shapes container.
+    //<div class="shape" data-leaflet-id="[the id]"><h1>Current ID: [the id]</h1></div>
+    $( "#shapes" ).append("Current ID: <h1 id = 'data-leaflet-id'></h1>");
+    $("#data-leaflet-id").text(myIDs);
 });
+
+//Task 4
+/*
+map.on('draw:created', function (e) {
+    console.log(e);
+    var type = e.layerType; // The type of shape
+    var layer = e.layer; // The Leaflet layer for the shape
+    var id = L.stamp(layer); // The unique Leaflet ID for the layer
+    // 2nd 3rd etc times
+    // Get the layer already on the map
+    if (myRectangle!==undefined){
+      map.removeLayer(myRectangle);
+      myRectangle = layer;}
+    // every first time
+    map.addLayer(layer);
+    myRectangle = layer;
+    $("#shapes").empty();
+    //Use jQuery's append function to add a new div inside the #shapes container.
+    //<div class="shape" data-leaflet-id="[the id]"><h1>Current ID: [the id]</h1></div>
+    $( "#shapes" ).append("Current ID: <h1 id = 'data-leaflet-id'></h1>");
+    $("#data-leaflet-id").text(id);
+});
+*/
