@@ -160,7 +160,6 @@ $(document).ready(function() {
     alert("Unable to access geolocation API!");
   }
 
-
   /* Every time a key is lifted while typing in the #dest input, disable
    * the #calculate button if no text is in the input
    */
